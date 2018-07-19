@@ -11,13 +11,12 @@ class graph_power:
         self.data_lr = {}
         self.data_lr['pkg'] = [listrotate2D(length=params['lrlen']) for i in range(self.npkgs)]
         self.data_lr['dram'] = [listrotate2D(length=params['lrlen']) for i in range(self.npkgs)]
-
         self.ax = layout.getax()
+        print "Power Graph Module is initialized with ", len(self.data_lr['pkg']), "package domains and ", len(self.data_lr['dram']), "domains"
 
         
     def update(self, params, sample):
         if sample['node'] == params['targetnode'] and sample['sample'] == 'energy':
-
             t = sample['time'] - params['ts']
             params['cur'] = t # this is used in update()
 
@@ -63,3 +62,5 @@ class graph_power:
             self.ax.set_xlabel('Time [s]')
             self.ax.set_ylabel('Power [W]')
             self.ax.set_title("Node Power (%s)" % params['targetnode'])
+        else:
+            print "I should not get here..."

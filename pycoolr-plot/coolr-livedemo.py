@@ -29,11 +29,11 @@ intervalsec = 1.0
 cfg = {}
 
 cfg["outputfn"] = 'multinodes.json'
-cfg["modnames"] = ['enclave', 'power', 'temp', 'runtime', 'freq', 'application']
+cfg["modnames"] = ['power']
 cfg["figwidth"] = 20
 cfg["figheight"] = 12
-cfg["ncols"] = 3
-cfg["nrows"] = 2
+cfg["ncols"] = 1
+cfg["nrows"] = 1
 
 
 def usage():
@@ -142,6 +142,9 @@ if len(enclaves) == 0:
     if cfg.has_key('enclaves'):
         enclaves = cfg['enclaves']
 
+# Hacking this line for now
+targetnode = 'srini-testing'
+
 print 'masternode:', cfg['masternode']
 print 'targetnode:', targetnode
 print 'enclaves:', enclaves
@@ -180,6 +183,8 @@ if not fakemode:
 
 
 npkgs=info['npkgs']
+print "Number of packages detected: ", npkgs
+print "Configuration: ", cfg
 lrlen=200  # to option
 gxsec=120 # graph x-axis sec
 
@@ -271,8 +276,9 @@ while True:
         print >>logf, json.dumps(e)
         if not (e.has_key('node') and\
                 e.has_key('sample') and\
-                e.has_key('time') ):
-            print 'Ignore this invalid sample:', json.dumps(e)
+                e.has_key('time') and \
+                e.has_key('power')):
+            #print 'Ignore this invalid sample:', json.dumps(e)
             continue
 
         if params['ts'] == 0:

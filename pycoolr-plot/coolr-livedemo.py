@@ -11,6 +11,7 @@ import json
 import time
 import getopt
 
+from time import sleep
 from listrotate import *
 from clr_utils import *
 
@@ -21,7 +22,7 @@ fakemode = False
 appcfgfn = ''
 targetnode = ''
 enclaves = []
-intervalsec = 1.0
+intervalsec = 1
 
 # here is the priority: options > cfg > default
 # cmd options are the highest priority
@@ -185,8 +186,8 @@ if not fakemode:
 npkgs=info['npkgs']
 print "Number of packages detected: ", npkgs
 print "Configuration: ", cfg
-lrlen=200  # to option
-gxsec=120 # graph x-axis sec
+lrlen=400  # to option
+gxsec=450 # graph x-axis sec
 
 #
 #
@@ -198,7 +199,9 @@ params['lrlen'] = lrlen
 params['gxsec'] = gxsec
 params['cur'] = 0  # this will be updated
 params['pkgcolors'] = [ 'blue', 'green' ] # for now
+params['dramcolors'] = [ 'red', 'yellow' ] # for now
 params['plimcolors'] = [ '#ff00aa', '#ffaa00' ] # for now
+params['dlimcolors'] = [ '#ff0baa', '#ffab00' ] # for now
 params['targetnode'] = targetnode
 params['enclaves'] = enclaves
 
@@ -298,7 +301,7 @@ while True:
     if pausesec > 0.0:
         plt.pause(pausesec)
 
-    print 'Profile Time [S]: %.2lf (%.2lf+%.2lf+%.2lf) / Queried %3d items from DB' %\
+    #print 'Profile Time [S]: %.2lf (%.2lf+%.2lf+%.2lf) / Queried %3d items from DB' %\
         (profile_t3-profile_t1+pausesec, profile_t2-profile_t1,\
          profile_t3-profile_t2, pausesec, len(j))
 

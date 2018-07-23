@@ -29,8 +29,10 @@ class graph_power:
                     return
                 tmplim = sample['powercap']['p%d'%pkgid]
                 tmppowdram =  sample['power']['p%d/dram'%pkgid]
+                tmppowlimdram = sample['powercap']['p%d/dram'%pkgid]
                 self.data_lr['pkg'][pkgid].add(t, tmppow, tmplim)
-                self.data_lr['dram'][pkgid].add(t, tmppowdram)
+                self.data_lr['dram'][pkgid].add(t, tmppowdram, tmppowlimdram)
+                print "Socket ID, Package Power, Package Limit, DRAM Power, and DRAM Limit", pkgid, tmppow, tmplim, tmppowdram, tmppowlimdram
 
             #
             # drawing
@@ -55,7 +57,9 @@ class graph_power:
             for t in self.data_lr['dram']:
                 x = t.getlistx()
                 y = t.getlisty()
-                self.ax.plot(x,y,color=params['pkgcolors'][pkgid], linestyle='-.', label='PKG%ddram'%pkgid)
+                ycap = t.getlisto()
+                self.ax.plot(x,ycap, color=params['dlimcolors'][pkgid], linestyle='-.', label='DRAM%dlimit'%pkgid )
+                self.ax.plot(x,y,color=params['dramcolors'][pkgid], linestyle='-.', label='PKG%ddram'%pkgid)
                 pkgid += 1
 
             self.ax.legend(loc='lower left', prop={'size':9})

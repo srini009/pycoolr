@@ -50,7 +50,7 @@ class graph_power:
                 ycap = t.getlisto()
                 #self.ax.plot(x,ycap, color='red', label='PKG%dlimit'%pkgid )
                 self.ax.plot(x,ycap, color=params['plimcolors'][pkgid], linestyle=':', label='PKG%dlimit'%pkgid )
-                self.ax.plot(x,y,color=params['pkgcolors'][pkgid], label='PKG%d'%pkgid)
+                self.ax.plot(x,y,color=params['pkgcolors'][pkgid], linestyle='--', label='PKG%d'%pkgid)
                 pkgid += 1
 
             pkgid = 0
@@ -58,8 +58,8 @@ class graph_power:
                 x = t.getlistx()
                 y = t.getlisty()
                 ycap = t.getlisto()
-                self.ax.plot(x,ycap, color=params['dlimcolors'][pkgid], linestyle='-.', label='DRAM%dlimit'%pkgid )
-                self.ax.plot(x,y,color=params['dramcolors'][pkgid], linestyle='-.', label='PKG%ddram'%pkgid)
+                self.ax.plot(x,ycap, color=params['dlimcolors'][pkgid], linestyle='-.', label='DRAM%dlimit'%pkgid)
+                self.ax.plot(x,y,color=params['dramcolors'][pkgid], linestyle='-', label='PKG%ddram'%pkgid)
                 pkgid += 1
 
             self.ax.legend(loc='lower left', prop={'size':9})

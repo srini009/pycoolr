@@ -32,7 +32,7 @@ class graph_power:
                 tmppowlimdram = sample['powercap']['p%d/dram'%pkgid]
                 self.data_lr['pkg'][pkgid].add(t, tmppow, tmplim)
                 self.data_lr['dram'][pkgid].add(t, tmppowdram, tmppowlimdram)
-                print "Socket ID, Package Power, Package Limit, DRAM Power, and DRAM Limit", pkgid, tmppow, tmplim, tmppowdram, tmppowlimdram
+                #print "Socket ID, Package Power, Package Limit, DRAM Power, and DRAM Limit", pkgid, tmppow, tmplim, tmppowdram, tmppowlimdram
 
             #
             # drawing

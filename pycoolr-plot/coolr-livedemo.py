@@ -30,7 +30,7 @@ intervalsec = 1
 cfg = {}
 
 cfg["outputfn"] = 'multinodes.json'
-cfg["modnames"] = ['power']
+cfg["modnames"] = ['power','progress']
 cfg["figwidth"] = 20
 cfg["figheight"] = 12
 cfg["ncols"] = 1
@@ -202,6 +202,7 @@ params['pkgcolors'] = [ 'blue', 'green' ] # for now
 params['dramcolors'] = [ 'red', 'yellow' ] # for now
 params['plimcolors'] = [ '#ff00aa', '#ffaa00' ] # for now
 params['dlimcolors'] = [ '#ff0baa', '#ffab00' ] # for now
+params['prgcolors'] = [ 'blue', 'green' ] # for now
 params['targetnode'] = targetnode
 params['enclaves'] = enclaves
 
@@ -281,7 +282,7 @@ while True:
                 e.has_key('sample') and\
                 e.has_key('time') and \
                 e.has_key('power')):
-            #print 'Ignore this invalid sample:', json.dumps(e)
+            print 'Ignore this invalid sample:', json.dumps(e)
             continue
 
         if params['ts'] == 0:

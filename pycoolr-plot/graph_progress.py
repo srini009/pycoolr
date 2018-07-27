@@ -24,18 +24,24 @@ class graph_progress:
         t = sample['time'] - params['ts']
         params['cur'] = t # this is used in update()
 	tot_progress = 0.0 #Use this to calculate average progress
+        tot_received = 0
 
-	#Process upto 5 updates
-        for update_prog_val in range(30):
+	#Process a configurable number of updates
+        for update_prog_val in range(params['cfg']['numzmqupdates']):
             try:
     		string = self.socket.recv(zmq.NOBLOCK)
 		topic, messagedata = string.split()
 		tot_progress += float(messagedata)
-		#print "Received: ", topic, messagedata
+		print "Received: ", topic, messagedata
+                tot_received += 1
 	    except:
 		continue
 
-	avg_progress = tot_progress / update_prog_val
+	if tot_received == 0:
+		avg_progress = 0.0
+	else:
+		avg_progress = tot_progress / tot_received
+
         self.data_lr['progress'][0].add(t, avg_progress)
         gxsec = params['gxsec']
         cfg = params['cfg']
@@ -50,5 +56,6 @@ class graph_progress:
 
         self.ax.legend(loc='lower left', prop={'size':9})
         self.ax.set_xlabel('Time [s]')
-        self.ax.set_ylabel('BlocksPerSec')
-        self.ax.set_title("QMCPACK Progress on (%s)" % params['targetnode'])
+        self.ax.set_ylabel(cfg['progressmetric'])
+        graph_title = "Progress for " + cfg['appname'] + " on (" + params['targetnode'] + ")"
+        self.ax.set_title(graph_title)

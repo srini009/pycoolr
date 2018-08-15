@@ -52,7 +52,7 @@ class graph_progress:
         for t in self.data_lr['progress']:
             x = t.getlistx()
             y = t.getlisty()
-            self.ax.plot(x,y,color=params['prgcolors'][0], linestyle='--', label='QMCPACK')
+            self.ax.plot(x,y,color=params['prgcolors'][0], linestyle='--', label=cfg['appname'])
 
         self.ax.legend(loc='lower left', prop={'size':9})
         self.ax.set_xlabel('Time [s]')

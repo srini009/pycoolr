@@ -30,7 +30,7 @@ intervalsec = 1
 cfg = {}
 
 cfg["outputfn"] = 'multinodes.json'
-cfg["modnames"] = ['power','progress']
+cfg["modnames"] = ['power','progress','efficiency']
 cfg["figwidth"] = 20
 cfg["figheight"] = 12
 cfg["ncols"] = 1

@@ -54,13 +54,13 @@ class graph_power:
                 pkgid += 1
 
             pkgid = 0
-            for t in self.data_lr['dram']:
+            """ for t in self.data_lr['dram']:
                 x = t.getlistx()
                 y = t.getlisty()
                 ycap = t.getlisto()
                 self.ax.plot(x,ycap, color=params['dlimcolors'][pkgid], linestyle='-.', label='DRAM%dlimit'%pkgid)
                 self.ax.plot(x,y,color=params['dramcolors'][pkgid], linestyle='-', label='PKG%ddram'%pkgid)
-                pkgid += 1
+                pkgid += 1 """
 
             self.ax.legend(loc='lower left', prop={'size':9})
             self.ax.set_xlabel('Time [s]')

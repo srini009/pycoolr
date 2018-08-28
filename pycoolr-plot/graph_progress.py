@@ -14,7 +14,7 @@ class graph_progress:
         self.context = zmq.Context()
 	self.socket = self.context.socket(zmq.SUB)
 	self.socket.connect(self.ip % self.port)
-	self.socket.setsockopt(zmq.SUBSCRIBE, "PROGRESS")
+	self.socket.setsockopt(zmq.SUBSCRIBE, "")
         self.data_lr = {}
         self.data_lr['progress'] = [listrotate2D(length=params['lrlen']) for i in range(1)]
         self.ax = layout.getax()
@@ -44,9 +44,10 @@ class graph_progress:
 		avg_progress = 0.0
 	else:
 		avg_progress = tot_progress / tot_received
-		self.running_avg_list.append(avg_progress)
-		self.running_avg_list.pop(0)
-		avg_progress = sum(self.running_avg_list)/len(self.running_avg_list)
+#Uncomment these lines only for AMG
+	#	self.running_avg_list.append(avg_progress)
+	#	self.running_avg_list.pop(0)
+	#	avg_progress = sum(self.running_avg_list)/len(self.running_avg_list)
 
         self.data_lr['progress'][0].add(t, avg_progress)
         gxsec = params['gxsec']

@@ -25,8 +25,8 @@ class graph_efficiency:
         self.running_efficiency_list_negative = []
 	self.last_power_lim = 250.0 #125.0x2 = 250. Hardcoding this for Skylake
 	self.last_progress = 0.0
-	self.counter = 5
-	for i in range(5): self.running_avg_list.append(0.0)
+	self.counter = 30
+	for i in range(30): self.running_avg_list.append(0.0)
 
         print "Progress Module is initialized with ip: ", self.ip % self.port
         
@@ -56,9 +56,6 @@ class graph_efficiency:
 		#self.running_avg_list.pop(0)
 		#avg_progress = sum(self.running_avg_list)/len(self.running_avg_list)
 
-	if self.last_progress == 0:
-		self.last_progress = avg_progress
-
         for pkgid in range(self.npkgs):
             tmplim += sample['powercap']['p%d'%pkgid]
         
@@ -68,11 +65,11 @@ class graph_efficiency:
 			efficiency = (avg_progress - self.last_progress)/(tmplim - self.last_power_lim)
 	        	self.data_lr['efficiency'][0].add(t, efficiency)
 			print "New efficiency, powerlimit " , efficiency, tmplim
-			if tmplim > self.last_power_lim:
+			if (tmplim > self.last_power_lim) and (self.last_progress > 0):
 				self.running_efficiency_list_positive.append(efficiency)
-			else:
+			elif (tmplim < self.last_power_lim) and (self.last_progress > 0):
 				self.running_efficiency_list_negative.append(efficiency)
-			self.counter = 6
+			self.counter = 31
 			self.last_power_lim = tmplim
 			self.last_progress = avg_progress
 		if avg_progress > 0: #Dont count garbage values of progress that "suddenly" drops to zero
@@ -82,7 +79,8 @@ class graph_efficiency:
 		#avg_progress = sum(self.running_avg_list)/len(self.running_avg_list)
 		
 	if len(self.running_efficiency_list_positive) >=1 and len(self.running_efficiency_list_negative) >=1:
-		print "Positive and Negative efficiency: ", sum(self.running_efficiency_list_positive)/len(self.running_efficiency_list_positive), sum(self.running_efficiency_list_negative)/len(self.running_efficiency_list_negative)
+		print "Positive Efficiency: Avg, Max, Min, Len: ", sum(self.running_efficiency_list_positive)/len(self.running_efficiency_list_positive), max(self.running_efficiency_list_positive), min(self.running_efficiency_list_positive), len(self.running_efficiency_list_positive)
+		print "Negative Efficiency: Avg, Max, Min: ", sum(self.running_efficiency_list_negative)/len(self.running_efficiency_list_negative), max(self.running_efficiency_list_negative), min(self.running_efficiency_list_negative), len(self.running_efficiency_list_negative)
 
         gxsec = params['gxsec']
         cfg = params['cfg']

@@ -25,8 +25,8 @@ class graph_efficiency:
         self.running_efficiency_list_negative = []
 	self.last_power_lim = 250.0 #125.0x2 = 250. Hardcoding this for Skylake
 	self.last_progress = 0.0
-	self.counter = 30
-	for i in range(30): self.running_avg_list.append(0.0)
+	self.counter = 15
+	for i in range(15): self.running_avg_list.append(0.0)
 
         print "Progress Module is initialized with ip: ", self.ip % self.port
         
@@ -69,7 +69,7 @@ class graph_efficiency:
 				self.running_efficiency_list_positive.append(efficiency)
 			elif (tmplim < self.last_power_lim) and (self.last_progress > 0):
 				self.running_efficiency_list_negative.append(efficiency)
-			self.counter = 31
+			self.counter = 16
 			self.last_power_lim = tmplim
 			self.last_progress = avg_progress
 		if avg_progress > 0: #Dont count garbage values of progress that "suddenly" drops to zero
